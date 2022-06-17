@@ -5,6 +5,7 @@ import CircleButton from './CircleButton';
 export default function TodoList() {
   let { todos, removeItem } = useReduceContext();
   const [itemCount, setItemCount] = useState(0);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     setItemCount(todos.length);
@@ -13,8 +14,12 @@ export default function TodoList() {
     const circle = e.target;
     circle.classList.toggle('checked');
     circle.nextSibling.classList.toggle('checked');
-
-    setItemCount(previousItemCount => previousItemCount--);
+    setChecked(!checked);
+    if (!checked)
+      setItemCount(previousItemCount =>
+        previousItemCount > 0 ? previousItemCount - 1 : 0
+      );
+    else setItemCount(previousItemCount => previousItemCount + 1);
   };
 
   return (
