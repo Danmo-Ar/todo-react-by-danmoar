@@ -1,13 +1,20 @@
+import { useEffect, useState } from 'react';
 import { useReduceContext } from '../hooks/useReduceContext';
 import CircleButton from './CircleButton';
 
 export default function TodoList() {
   let { todos, removeItem } = useReduceContext();
+  const [itemCount, setItemCount] = useState(0);
 
+  useEffect(() => {
+    setItemCount(todos.length);
+  }, [todos]);
   const checkItem = e => {
     const circle = e.target;
     circle.classList.toggle('checked');
     circle.nextSibling.classList.toggle('checked');
+
+    setItemCount(previousItemCount => previousItemCount--);
   };
 
   return (
@@ -41,7 +48,7 @@ export default function TodoList() {
       </div>
 
       <div className="footer-info">
-        <p className="task-number">{todos.length} items left</p>
+        <p className="task-number">{itemCount} items left</p>
         <div className="button-list">
           <button className="btn">All</button>
           <button className="btn">Active</button>

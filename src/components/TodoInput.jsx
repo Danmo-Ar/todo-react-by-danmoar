@@ -11,7 +11,7 @@ export default function TodoInput() {
 
   useEffect(() => {
     const existingTodo = JSON.parse(localStorage.getItem('allTodo'));
-    existingTodo && addTask(existingTodo);
+    existingTodo && existingTodo.length > 1 && addTask(existingTodo);
   }, [addTask]);
 
   const submitHandler = e => {
